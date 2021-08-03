@@ -24,6 +24,35 @@ namespace CadastroClienteCRUD
         {
             txtId.Text = "";
             txtNome.Text = "";
+            dgvDados.ClearSelection();
+        }
+
+        public void Exibir()
+        {
+            try
+            {
+                strSql = "select * from cliente";
+
+                da = new MySqlDataAdapter(strSql, conexao);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                dgvDados.DataSource = dt;
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+
+                comando = null;
+            }
         }
 
 
@@ -31,6 +60,7 @@ namespace CadastroClienteCRUD
         public Favorecidos()
         {
             InitializeComponent();
+            Exibir();
 
             
         }
@@ -65,6 +95,7 @@ namespace CadastroClienteCRUD
                 MessageBox.Show("Cadastro realizado com Sucesso");
                 limpar();
                 comando = null;
+                Exibir();
             }
         }
 
@@ -104,6 +135,7 @@ namespace CadastroClienteCRUD
                 MessageBox.Show("Cadastro atualizado com Sucesso");
                 limpar();
                 comando = null;
+                Exibir();
             }
         }
 
@@ -132,6 +164,7 @@ namespace CadastroClienteCRUD
                 MessageBox.Show("Cadastro excluído com Sucesso");
                 limpar();
                 comando = null;
+                Exibir();
             }
         }
 
@@ -139,7 +172,7 @@ namespace CadastroClienteCRUD
         {
             try
             {
-                strSql = "select * from cliente where idcliente = @idcliente";
+                strSql = "select * from cliente cliente where idcliente = @idcliente";
 
                 comando = new MySqlCommand(strSql, conexao);
 
@@ -194,6 +227,13 @@ namespace CadastroClienteCRUD
                 comando = null;
             }
         }
-    
+
+        private void dgvDados_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int sel = dgvDados.CurrentRow.Index;
+
+            txtId.Text = Convert.ToString(dgvDados["idcliente", sel].Value);
+            txtNome.Text = Convert.ToString(dgvDados["nome", sel].Value);
+        }
     }
 }

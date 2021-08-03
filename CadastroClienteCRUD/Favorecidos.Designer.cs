@@ -96,6 +96,7 @@ namespace CadastroClienteCRUD
             this.dgvDados.Name = "dgvDados";
             this.dgvDados.Size = new System.Drawing.Size(477, 150);
             this.dgvDados.TabIndex = 5;
+            this.dgvDados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDados_CellContentClick);
             // 
             // btnNovo
             // 
